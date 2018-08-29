@@ -1,5 +1,6 @@
 package haixu.android.coolweather.com.coolweather;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.media.Image;
@@ -25,6 +26,7 @@ import java.io.IOException;
 
 import haixu.android.coolweather.com.coolweather.gson.Forecast;
 import haixu.android.coolweather.com.coolweather.gson.Weather;
+import haixu.android.coolweather.com.coolweather.service.AutoUpdateService;
 import haixu.android.coolweather.com.coolweather.util.HttpUtil;
 import haixu.android.coolweather.com.coolweather.util.Utility;
 import okhttp3.Call;
@@ -157,6 +159,8 @@ public class WeatherActivity extends AppCompatActivity {
                             editor.putString("weather", responseText);
                             editor.apply();
                             showWeatherInfo(weather);
+                            Intent intent = new Intent(this, AutoUpdateService.class);
+                            startService(intent);
                         } else {
                             Toast.makeText(WeatherActivity.this, "获取天气信息失败", Toast.LENGTH_SHORT).show();
                         }
